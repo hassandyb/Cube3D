@@ -1,36 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parcing.h                                          :+:      :+:    :+:   */
+/*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/23 12:17:16 by hed-dyb           #+#    #+#             */
-/*   Updated: 2023/12/23 18:55:09 by hed-dyb          ###   ########.fr       */
+/*   Created: 2023/12/23 19:00:32 by hed-dyb           #+#    #+#             */
+/*   Updated: 2023/12/23 20:09:01 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARCING_H
-# define Parcing_H
+#include "../header.h"
 
-#include <stdint.h>
-#include <stdlib.h>
-
-
-
-typedef struct	s_parse
+bool ft_do_ray_casting(t_prime *prime, t_parse *parse)
 {
-	char	**map;
-	char	*no;
-	char	*so;
-	char	*we;
-	char	*ea;
-
-	// __unit32_t f;
-	// __unit32_t c;
-
-} t_parse;
-
-t_parse  *ft_virtual_parcing(int ac, char **av);
-
-# endif
+	(void) prime;
+	(void) parse;
+	return (true);
+	// prime->parse = parse;
+	// ft_initialize_map_dementions();
+}

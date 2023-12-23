@@ -6,10 +6,9 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 12:06:02 by hed-dyb           #+#    #+#             */
-/*   Updated: 2023/12/23 15:48:37 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2023/12/23 20:09:52 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 
 #include "header.h"
@@ -24,7 +23,20 @@ int main (int ac, char **av)
 		// free all 
 		return (1);
 	}
+	t_prime prime;
+	if(ft_do_ray_casting(&prime, parse) == false)
+	{
+		// free all 
+		return (1);
+	}
 
+
+
+	// if(ft_do_rendering(parse) == false)
+	// {
+	// 	// free all 
+	// 	return (1);
+	// }
 	
 	
 	return (0);

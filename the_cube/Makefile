@@ -6,7 +6,7 @@
 #    By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/23 14:47:42 by hed-dyb           #+#    #+#              #
-#    Updated: 2023/12/23 15:39:17 by hed-dyb          ###   ########.fr        #
+#    Updated: 2023/12/23 20:11:35 by hed-dyb          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,17 +16,17 @@ HEADER = header.h
 
 CC = cc 
 
-RM = rm - f 
+RM = rm -f 
 
 FLAGS = -Wall -Wextra -Werror -fsanitize=address #-Imlx
 
 #LINKING_FLAGS = -lmlx -framework OpenGL -framework AppKit
 
 # SRC_PARCING = $(addprefix parcing/, example.....)
-# SRC_RAY_CASTING = $(addprefix ray_casting/, example.....)
+SRC_RAY_CASTING = $(addprefix ray_casting/, raycasting.c)
 # SRC_RENDERING = $(addprefix rendering/, example.....)
 
-SRC = main.c test.c #$(SRC_PARCING) $(SRC_RAY_CASTING) $(SRC_RENDERING)
+SRC = main.c test.c $(SRC_RAY_CASTING) #$(SRC_PARCING)  $(SRC_RENDERING)
 
 OBJECTS = ./obj
 

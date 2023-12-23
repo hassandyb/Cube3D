@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 12:55:53 by hed-dyb           #+#    #+#             */
-/*   Updated: 2023/12/23 15:40:49 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2023/12/23 20:02:12 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ t_parse  *ft_virtual_parcing(int ac, char **av)
 		
 	}
 	parse->map[7] = NULL;
-	parse->x = 14;
-	parse->y = 7;
+
 	return (parse);
 }
