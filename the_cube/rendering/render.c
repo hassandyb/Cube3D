@@ -6,22 +6,43 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 11:23:06 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/01/02 14:57:15 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/01/08 21:11:50 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-// remove later ##########################################
+// Useful ##########################################
+
+
+
+void ft_put_a_pixel(t_prime *prime, int x, int y, int color)
+{
+    int pos =  (y * prime->linesize + x * (prime->bits / 8));// divded on 8 tio transform it to byte
+
+    // x * (prime->bits / 8) the pexel is color  we want is stoes as int, but we incrent in
+    //  byts (so multiple the buy 4 wich is (prime->bits / 8) to each 
+    // the begining of the int we are about to chage
+
+    *(unsigned int *)(prime->ad_ptr + pos) = color;
+}
 
 void ft_put_player(t_prime *prime, void *win_ptr)
 {
-	mlx_pixel_put(prime->mlx_ptr, win_ptr, prime->player.px, prime->player.py, 0xFF0000);
-	mlx_pixel_put(prime->mlx_ptr, win_ptr, prime->player.px -1, prime->player.py, 0xFF0000);
-	mlx_pixel_put(prime->mlx_ptr, win_ptr, prime->player.px + 1, prime->player.py, 0xFF0000);
+	// mlx_pixel_put(prime->mlx_ptr, win_ptr, prime->player.px, prime->player.py, 0xFF0000);
+	// mlx_pixel_put(prime->mlx_ptr, win_ptr, prime->player.px -1, prime->player.py, 0xFF0000);
+	// mlx_pixel_put(prime->mlx_ptr, win_ptr, prime->player.px + 1, prime->player.py, 0xFF0000);
 
-	mlx_pixel_put(prime->mlx_ptr, win_ptr, prime->player.px, prime->player.py + 1, 0xFF0000);
-	mlx_pixel_put(prime->mlx_ptr, win_ptr, prime->player.px, prime->player.py - 1, 0xFF0000);
+	// mlx_pixel_put(prime->mlx_ptr, win_ptr, prime->player.px, prime->player.py + 1, 0xFF0000);
+	// mlx_pixel_put(prime->mlx_ptr, win_ptr, prime->player.px, prime->player.py - 1, 0xFF0000);
+    (void)win_ptr;
+    ft_put_a_pixel(prime, prime->player.px, prime->player.py, 0xFF0000);
+	ft_put_a_pixel(prime, prime->player.px -1, prime->player.py, 0xFF0000);
+	ft_put_a_pixel(prime, prime->player.px + 1, prime->player.py, 0xFF0000);
+
+	ft_put_a_pixel(prime, prime->player.px, prime->player.py + 1, 0xFF0000);
+	ft_put_a_pixel(prime, prime->player.px, prime->player.py - 1, 0xFF0000);
+
 }
 
 void ft_color_walls(t_prime *prime)
@@ -43,7 +64,8 @@ void ft_color_walls(t_prime *prime)
                 {
                     for (int j = 0; j < square_size; j++)
                     {
-                        mlx_pixel_put(prime->mlx_ptr, prime->win_ptr, (x * square_size) + i, (y * square_size) + j, color);
+                        ft_put_a_pixel(prime, (x * square_size) + i, (y * square_size) + j, color);
+                        // mlx_pixel_put(prime->mlx_ptr, prime->win_ptr, (x * square_size) + i, (y * square_size) + j, color);
                     }
                 }
             }
@@ -62,191 +84,99 @@ void ft_draw_line(t_prime *prime, int x1, int y1, double angle, int length, int 
     {
         int x = x1 + i * dx;
         int y = y1 + i * dy;
-        mlx_pixel_put(prime->mlx_ptr, prime->win_ptr, x, y, color);
+        ft_put_a_pixel(prime, x, y, color);
+        // mlx_pixel_put(prime->mlx_ptr, prime->win_ptr, x, y, color);
     }
 }
-// ----------------------------------
+// -----------------------------------------------------------------
 
-void ft_update_range(t_prime *prime)
+void  ft_show_field_of_view(t_prime *prime)
 {
-	if(prime->player.angle >= 0 && prime->player.angle < (M_PI / 2))
-		prime->angle_range = 1;
-	if(prime->player.angle >= (M_PI / 2) && prime->player.angle < M_PI)
-		prime->angle_range = 2;
-	if(prime->player.angle >= M_PI && prime->player.angle < (3 * M_PI / 2))
-		prime->angle_range = 3;
-	if(prime->player.angle >= (3 * M_PI / 2) && prime->player.angle < (2 * M_PI))
-		prime->angle_range = 4;
+    double teta;
+    int i ;
+
+
+    teta = FIELD_OF_VIEW / SCREEN_WID;
+    prime->ray.r_angle = prime->player.angle - (FIELD_OF_VIEW / 2);
+    prime->ray.r_angle = ft_normalizing(prime->ray.r_angle);
+    i = 0;
+    while(i < SCREEN_WID)
+    {
+        ft_ray_cast(prime);
+        ft_draw_line(prime, prime->player.px, prime->player.py, prime->ray.r_angle, prime->ray.len, 0x6496C8);
+        prime->ray.r_angle += teta;
+        prime->ray.r_angle = ft_normalizing(prime->ray.r_angle);
+        i++;
+    }
+    
 }
 
-void ft_update_angle(t_prime *prime)
+// -----------------------------------------------------------------------------
+
+
+
+bool ft_init_mlx_data(t_prime *prime)
 {
-	if(prime->rotate_status == 1)
-		prime->player.angle += ROTATE_ANGLE;
-	if(prime->rotate_status == -1)
-		prime->player.angle -= ROTATE_ANGLE;
-	// normalizing
-	if(prime->player.angle < 0)
-		prime->player.angle += (2 * M_PI);
-	if(prime->player.angle >= (2 * M_PI))
-		prime->player.angle -= (2 * M_PI);
-
+    int parameter;
+    prime->mlx_ptr = mlx_init();
+    if(prime->mlx_ptr == NULL)
+		return false;
+    prime->win_ptr = mlx_new_window(prime->mlx_ptr, prime->cols * IMG_SIZE, prime->lines * IMG_SIZE, "my window");
+    if(prime->win_ptr == NULL)
+        return false;
+    prime->img_ptr = mlx_new_image(prime->mlx_ptr, SCREEN_WID, SCREEN_HEI);
+    if(prime->img_ptr == NULL)
+        return false;
+    // 0 0 are the begining of i and j wree yu wanna start to put the image
+    prime->ad_ptr = mlx_get_data_addr(prime->img_ptr, &prime->bits, &prime->linesize , &parameter);
+    if(prime->ad_ptr == NULL)
+        return false;
+    
+    return true;
 }
-
-void ft_update_postion(t_prime *prime)
-{
-	if(prime->angle_range == 1 )
-	{
-		ft_first_range(prime);
-	}
-	if(prime->angle_range == 2)
-	{
-		ft_second_range(prime);
-	}
-	if(prime->angle_range == 3)
-	{
-		ft_third_range(prime);
-	}
-	if(prime->angle_range == 4)
-	{
-		ft_fourth_range(prime);
-	}
-}
-
-
-// In process -----------------------------------------------------------------------------------------------------------
-
-
-
-void ft_update_line_r1(t_prime *prime)
-{
-	int j;
-	double alpha;
-
-	j = prime->player.py / IMG_SIZE;
-	prime->ray.deltay = ((j + 1) * IMG_SIZE) - prime->player.py;
-	alpha = prime->ray.r_angle;
-	prime->ray.deltax = prime->ray.deltay / tan(alpha);
-	prime->ray.first = prime->ray.deltay / sin(alpha);
-	prime->ray.periodic = IMG_SIZE / sin(alpha);
-
-}
-
-void ft_find_l_len_r1(t_prime *prime)
-{
-	int i;
-	int j;
-	double point_x;
-	double point_y;
-	double alpha;
-
-	alpha = prime->ray.r_angle;
-	point_x = prime->player.px + prime->ray.deltax;
-	j = prime->player.py / IMG_SIZE;
-	point_y = (j +  1) * IMG_SIZE;
-	
-	i = point_x / IMG_SIZE;
-	j = point_y / IMG_SIZE;
-	if(prime->parse->map[j][i] == '1')
-		prime->ray.l_len = prime->ray.first;
-	else
-	{
-		while(1)
-		{
-			point_x += prime->ray.periodic * cos(alpha);
-			point_y += IMG_SIZE;
-			i = point_x / IMG_SIZE;
-			j = point_y / IMG_SIZE;
-			prime->ray.l_len += prime->ray.periodic;
-			if(prime->parse->map[j][i] == '1')
-				break;
-		}
-	}
-}
-
-void ft_update_col_r1(t_prime *prime)
-{
-	int i;
-	double alpha;
-
-	i = prime->player.px / IMG_SIZE;
-	prime->ray.deltax = ((i + 1) * IMG_SIZE) - prime->player.px;
-	alpha = prime->ray.r_angle;
-
-	prime->ray.deltay = prime->ray.deltax * tan(alpha);
-	prime->ray.first = prime->ray.deltay / sin (alpha);
-	prime->ray.periodic = IMG_SIZE / cos(alpha);
-}
-
-// void ft_find_c_len_r1(t_prime *prime)
-// {
-// 	int i;
-// 	int j;
-// 	double point_x;
-// 	double point_y;
-// 	double alpha;
-
-// 	alpha = prime->player
-
-
-	
-// }
-
-
-// void ft_intersection(t_prime *prime, double r_angle)
-// {
-// 	// you must get the r_angle normalized
-// 	// initilise the r_angle with something like playera nagle 
-// 	prime->ray.r_angle = r_angle;
-
-// 	if(r_angle >= 0 && r_angle < M_PI / 2)
-// 	{
-		
-// 		ft_update_line_r1(prime);
-// 		ft_find_l_len_r1(prime);
-// 		ft_update_col_r1(prime);
-// 		// ft_find_c_len_r1(prime);
-// 		// update step buy step...
-// 		// ft_update_hit_and_len(prime);
-// 		// return d;
-
-// 	}
-
-// }
-
-//----------------------------------------------------------------
-
 
 int ft_raycast_and_render(t_prime *prime)
 {
-	
+    int parameter;
+	ft_update_range(prime);
 	ft_update_postion(prime);
 	ft_update_angle(prime);
-	ft_update_range(prime);
-	// to remove later -----
-	mlx_clear_window(prime->mlx_ptr ,prime->win_ptr);
-	ft_draw_line(prime, prime->player.px, prime->player.py, prime->player.angle, 30, 0x6496C8);
-	ft_color_walls((prime));
-	ft_put_player(prime, prime->win_ptr);
 	
+	// to remove later ####################################
+	
+    mlx_clear_window(prime->mlx_ptr, prime->win_ptr);
+    mlx_destroy_image(prime->mlx_ptr, prime->img_ptr);
+    prime->img_ptr = mlx_new_image(prime->mlx_ptr, SCREEN_WID, SCREEN_HEI);
+    prime->ad_ptr = mlx_get_data_addr(prime->img_ptr, &prime->bits, &prime->linesize , &parameter);
+    
+
+    ft_color_walls((prime));
+	ft_put_player(prime, prime->win_ptr);
+	ft_show_field_of_view(prime);
+    
+
+    mlx_put_image_to_window(prime->mlx_ptr, prime->win_ptr,prime->img_ptr, 0, 0);
 
 	return 0;
 }
 
+
 bool ft_rendering(t_prime *prime)
 {
-	prime->mlx_ptr = mlx_init();
-	if(prime->mlx_ptr == NULL)
-		return false;
 	
-	prime->win_ptr = mlx_new_window(prime->mlx_ptr, prime->cols * IMG_SIZE, prime->lines * IMG_SIZE, "my window");
 	
-	// to remove or mofify : ----------------------------------
-	ft_draw_line(prime, prime->player.px, prime->player.py, prime->player.angle, 30, 0x6496C8);
+	if(ft_init_mlx_data(prime) == false)
+    {
+        // ft_cleen_exit(t_prime *prime);
+    }
+
+	// to remove or mofify : ####################################
 	ft_color_walls((prime));
+    ft_show_field_of_view(prime);
 	ft_put_player(prime, prime->win_ptr);
+    mlx_put_image_to_window(prime->mlx_ptr, prime->win_ptr,prime->img_ptr, 0, 0);
 	
-	
+
 	mlx_hook(prime->win_ptr, KEY_PRESS, 0L, ft_press_events, prime);
 	mlx_hook(prime->win_ptr, KEY_RELEASE, 0L, ft_release_events, prime);
 	mlx_loop_hook(prime->mlx_ptr, ft_raycast_and_render, prime);

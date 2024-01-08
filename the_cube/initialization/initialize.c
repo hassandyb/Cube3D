@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 11:55:55 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/01/01 11:29:58 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/01/08 15:56:01 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,23 @@ void ft_initialize(t_prime *prime, t_parse *parse)
 
 
 	ft_update_range(prime);
+	prime->mlx_ptr = NULL;
+	prime->win_ptr = NULL;
+	prime->img_ptr = NULL;
+	prime->ad_ptr = NULL;
+
+	//  if it is working without initialization remove them .......
+	prime->ray.hit = true;
+	prime->ray.r_angle = 0;
+	prime->ray.len = 0;
+	prime->ray.deltax = 0;
+	prime->ray.deltay = 0;
+	prime->ray.first = 0;
+	prime->ray.periodic = 0;
+	prime->ray.l_len = 0;
+	prime->ray.c_len = 0;
+
+	
 
 
 }
