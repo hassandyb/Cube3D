@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 12:18:11 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/01/08 19:55:30 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/01/09 10:19:58 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define KEY_ESC 53
 # define KEY_PRESS 2
 # define KEY_RELEASE 3
+# define DESTROYNOTIFY 17
 
 # define SCREEN_WID 1080
 # define SCREEN_HEI 720
@@ -158,7 +159,7 @@ void ft_find_c_len_r4(t_prime *prime);
 void ft_raycast_r4(t_prime *prime);
 double ft_normalizing(double angle);
 void	ft_cleen_exit(t_prime *prime);
-
+int ft_close_botton(t_prime *prime);
 
 
 void ft_ray_cast(t_prime *prime);

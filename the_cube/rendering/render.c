@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 11:23:06 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/01/08 21:11:50 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/01/09 10:22:34 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,6 @@ void ft_put_a_pixel(t_prime *prime, int x, int y, int color)
 
 void ft_put_player(t_prime *prime, void *win_ptr)
 {
-	// mlx_pixel_put(prime->mlx_ptr, win_ptr, prime->player.px, prime->player.py, 0xFF0000);
-	// mlx_pixel_put(prime->mlx_ptr, win_ptr, prime->player.px -1, prime->player.py, 0xFF0000);
-	// mlx_pixel_put(prime->mlx_ptr, win_ptr, prime->player.px + 1, prime->player.py, 0xFF0000);
-
-	// mlx_pixel_put(prime->mlx_ptr, win_ptr, prime->player.px, prime->player.py + 1, 0xFF0000);
-	// mlx_pixel_put(prime->mlx_ptr, win_ptr, prime->player.px, prime->player.py - 1, 0xFF0000);
     (void)win_ptr;
     ft_put_a_pixel(prime, prime->player.px, prime->player.py, 0xFF0000);
 	ft_put_a_pixel(prime, prime->player.px -1, prime->player.py, 0xFF0000);
@@ -59,13 +53,11 @@ void ft_color_walls(t_prime *prime)
         {
             if (prime->parse->map[y][x] == '1')
             {
-                // Color the square with the specified color
                 for (int i = 0; i < square_size; i++)
                 {
                     for (int j = 0; j < square_size; j++)
                     {
                         ft_put_a_pixel(prime, (x * square_size) + i, (y * square_size) + j, color);
-                        // mlx_pixel_put(prime->mlx_ptr, prime->win_ptr, (x * square_size) + i, (y * square_size) + j, color);
                     }
                 }
             }
@@ -85,7 +77,7 @@ void ft_draw_line(t_prime *prime, int x1, int y1, double angle, int length, int 
         int x = x1 + i * dx;
         int y = y1 + i * dy;
         ft_put_a_pixel(prime, x, y, color);
-        // mlx_pixel_put(prime->mlx_ptr, prime->win_ptr, x, y, color);
+
     }
 }
 // -----------------------------------------------------------------
@@ -143,8 +135,6 @@ int ft_raycast_and_render(t_prime *prime)
 	ft_update_angle(prime);
 	
 	// to remove later ####################################
-	
-    mlx_clear_window(prime->mlx_ptr, prime->win_ptr);
     mlx_destroy_image(prime->mlx_ptr, prime->img_ptr);
     prime->img_ptr = mlx_new_image(prime->mlx_ptr, SCREEN_WID, SCREEN_HEI);
     prime->ad_ptr = mlx_get_data_addr(prime->img_ptr, &prime->bits, &prime->linesize , &parameter);
@@ -170,15 +160,10 @@ bool ft_rendering(t_prime *prime)
         // ft_cleen_exit(t_prime *prime);
     }
 
-	// to remove or mofify : ####################################
-	ft_color_walls((prime));
-    ft_show_field_of_view(prime);
-	ft_put_player(prime, prime->win_ptr);
-    mlx_put_image_to_window(prime->mlx_ptr, prime->win_ptr,prime->img_ptr, 0, 0);
-	
 
 	mlx_hook(prime->win_ptr, KEY_PRESS, 0L, ft_press_events, prime);
 	mlx_hook(prime->win_ptr, KEY_RELEASE, 0L, ft_release_events, prime);
+    mlx_hook(prime->win_ptr, DESTROYNOTIFY, 0L, ft_close_botton, prime);
 	mlx_loop_hook(prime->mlx_ptr, ft_raycast_and_render, prime);
 
 

@@ -6,13 +6,13 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 13:42:38 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/01/08 21:15:41 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/01/09 10:20:36 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-void ft_cleen_exit(t_prime *prime)
+void ft_clean_exit(t_prime *prime)
 {
 	int j;
 
@@ -59,7 +59,7 @@ int ft_press_events(int key, t_prime *prime)
 		prime->rotate_status = -1;
 	// ----
 	if(key == KEY_ESC)
-		ft_cleen_exit(prime);
+		ft_clean_exit(prime);
 	return 0;
 }
 
@@ -72,4 +72,10 @@ int ft_release_events(int key, t_prime *prime)
 	if(key == KEY_RIGHT_ARROW || key == KEY_LEFT_ARROW)
 		prime->rotate_status = 0;
 	return 0;
+}
+
+int ft_close_botton(t_prime *prime)
+{
+	ft_clean_exit(prime);
+	return (0);
 }
