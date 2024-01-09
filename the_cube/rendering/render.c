@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 11:23:06 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/01/09 10:22:34 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/01/09 10:48:32 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ bool ft_init_mlx_data(t_prime *prime)
     prime->win_ptr = mlx_new_window(prime->mlx_ptr, prime->cols * IMG_SIZE, prime->lines * IMG_SIZE, "my window");
     if(prime->win_ptr == NULL)
         return false;
-    prime->img_ptr = mlx_new_image(prime->mlx_ptr, SCREEN_WID, SCREEN_HEI);
+    prime->img_ptr = mlx_new_image(prime->mlx_ptr, prime->cols * IMG_SIZE, prime->lines * IMG_SIZE);
     if(prime->img_ptr == NULL)
         return false;
     // 0 0 are the begining of i and j wree yu wanna start to put the image
@@ -149,7 +149,6 @@ int ft_raycast_and_render(t_prime *prime)
 
 	return 0;
 }
-
 
 bool ft_rendering(t_prime *prime)
 {
