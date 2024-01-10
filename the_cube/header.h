@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 12:18:11 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/01/09 10:19:58 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/01/10 12:08:14 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,14 @@ typedef struct s_ray
 	
 } t_ray;
 
+typedef struct s_wall 
+{
+	double d;// fixed destance
+	int h;// lenth on the screen - number of pixels wall
+
+
+}t_wall;
+
 
 typedef struct s_prime
 {
@@ -98,8 +106,10 @@ typedef struct s_prime
 	int rotate_status;
 
 	int angle_range;// 1 or 2 or 3 or 4
+	
 
 	t_ray ray;
+	t_wall wall;
 } t_prime;
 
 

@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 11:55:55 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/01/08 15:56:01 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/01/09 14:10:08 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,9 @@ void ft_initialize(t_prime *prime, t_parse *parse)
 	prime->win_ptr = NULL;
 	prime->img_ptr = NULL;
 	prime->ad_ptr = NULL;
-
+	
+	prime->wall.d = (SCREEN_WID / 2) / tan(FIELD_OF_VIEW / 2);
+	
 	//  if it is working without initialization remove them .......
 	prime->ray.hit = true;
 	prime->ray.r_angle = 0;
