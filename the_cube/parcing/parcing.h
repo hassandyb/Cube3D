@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 12:17:16 by hed-dyb           #+#    #+#             */
-/*   Updated: 2023/12/23 18:55:09 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/01/14 11:27:18 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include <stdint.h>
 #include <stdlib.h>
-
+#include <string.h>
 
 
 typedef struct	s_parse
@@ -26,8 +26,8 @@ typedef struct	s_parse
 	char	*we;
 	char	*ea;
 
-	// __unit32_t f;
-	// __unit32_t c;
+	// int f;
+	// int c;
 
 } t_parse;
 

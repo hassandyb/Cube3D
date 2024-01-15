@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 12:18:11 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/01/10 12:08:14 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/01/15 15:01:55 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <math.h>
 # include <mlx.h>
 # include <unistd.h>// remove later
+#include <string.h>// for strdup
 
 # define IMG_SIZE 32
 # define ROTATE_ANGLE (M_PI / 49)
@@ -39,6 +40,15 @@
 # define SCREEN_HEI 720
 # define FIELD_OF_VIEW (M_PI / 3)
 
+# define EAST 0
+# define SOUTH 1
+# define WEST 2
+# define NORTH 3
+
+#define HIT_EAST 1
+#define HIT_SOUTH 2
+#define HIT_WEST 3
+#define HIT_NORTH 4
 
 typedef struct s_player
 {
@@ -81,10 +91,21 @@ typedef struct s_wall
 {
 	double d;// fixed destance
 	int h;// lenth on the screen - number of pixels wall
-
+	double real;
+	int x_tile;// the hited in the IMG_SIZE (on the map )
+	
 
 }t_wall;
 
+typedef struct s_img
+{
+	void	*obj;
+	char		*ad;
+	int wid;
+	int hei;
+	int size_line;
+	int bits_per_pixel;
+} t_img;
 
 typedef struct s_prime
 {
@@ -110,6 +131,7 @@ typedef struct s_prime
 
 	t_ray ray;
 	t_wall wall;
+	t_img imgs[4];// 0 for east 1 for south 2 for west and 3 for north
 } t_prime;
 
 
