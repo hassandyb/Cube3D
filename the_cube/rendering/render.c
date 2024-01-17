@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 11:23:06 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/01/15 15:47:04 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/01/17 14:55:41 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,46 +25,6 @@ void ft_put_a_pixel(t_prime *prime, int x, int y, int color)
 	*(unsigned int *)(prime->ad_ptr + pos) = color;
 }
 
-void ft_put_player(t_prime *prime, void *win_ptr)
-{
-	(void)win_ptr;
-	ft_put_a_pixel(prime, prime->player.px, prime->player.py, 0xFF0000);
-	ft_put_a_pixel(prime, prime->player.px -1, prime->player.py, 0xFF0000);
-	ft_put_a_pixel(prime, prime->player.px + 1, prime->player.py, 0xFF0000);
-
-	ft_put_a_pixel(prime, prime->player.px, prime->player.py + 1, 0xFF0000);
-	ft_put_a_pixel(prime, prime->player.px, prime->player.py - 1, 0xFF0000);
-
-}
-
-void ft_color_walls(t_prime *prime)
-{
-	int x, y;
-	int square_size = 32; // Adjust the size of the square as needed
-	int color = 0xA7C957; // Specify the color for '1'
-
-	y = 0;
-	while (prime->parse->map[y])
-	{
-		x = 0;
-		while (prime->parse->map[y][x])
-		{
-			if (prime->parse->map[y][x] == '1')
-			{
-				for (int i = 0; i < square_size; i++)
-				{
-					for (int j = 0; j < square_size; j++)
-					{
-						ft_put_a_pixel(prime, (x * square_size) + i, (y * square_size) + j, color);
-					}
-				}
-			}
-			x++;
-		}
-		y++;
-	}
-}
-
 void ft_draw_line(t_prime *prime, int x1, int y1, double angle, int length, int color)
 {
 	double dx = cos(angle);
@@ -79,26 +39,6 @@ void ft_draw_line(t_prime *prime, int x1, int y1, double angle, int length, int 
 	}
 }
 
-void  ft_show_field_of_view(t_prime *prime)
-{
-	double teta;
-	int i ;
-
-
-	teta = FIELD_OF_VIEW / SCREEN_WID;
-	prime->ray.r_angle = prime->player.angle - (FIELD_OF_VIEW / 2);
-	prime->ray.r_angle = ft_normalizing(prime->ray.r_angle);
-	i = 0;
-	while(i < SCREEN_WID)
-	{
-		ft_ray_cast(prime);
-		ft_draw_line(prime, prime->player.px, prime->player.py, prime->ray.r_angle, prime->ray.len, 0x6496C8);
-		prime->ray.r_angle += teta;
-		prime->ray.r_angle = ft_normalizing(prime->ray.r_angle);
-		i++;
-	}
-	
-}
 //-----------------------------------------------------------------------
 
 bool ft_load_img(t_prime *prime, char *path, int car)// car refes to cardinal wish is east west south ..ext
@@ -189,22 +129,19 @@ void ft_sky_and_ground(t_prime *prime)
 	{
 		i = -1;
 		while(++i < SCREEN_WID)
-			// ft_put_a_pixel(prime, i, j, 0x000000);
-			ft_put_a_pixel(prime, i, j, 0x012840);
+			ft_put_a_pixel(prime, i, j, prime->parse->c);
 	}
 	j--;
 	while(++j < SCREEN_HEI)
 	{
 		i = -1;
 		while(++i < SCREEN_WID)
-			ft_put_a_pixel(prime, i, j, 0x011826);
+			ft_put_a_pixel(prime, i, j, prime->parse->f);
 	}
 
 }
 
-
 //###########################################################
-
 
 void ft_show_the_colom_v1(t_prime *prime, int x, int color)// used to color walls only
 {
@@ -235,13 +172,13 @@ bool ft_the_easy_cases(t_prime *prime)
 {
 	if(prime->ray.r_angle == 0 || prime->ray.r_angle == M_PI)
 	{
-		prime->wall.x_tile = (int)prime->player.py % IMG_SIZE;
+		prime->wall.x_tile = (long)prime->player.py % IMG_SIZE;
 
 		return true;
 	}
 	if(prime->ray.r_angle == (M_PI / 2) || prime->ray.r_angle == (3 * M_PI / 2))
 	{
-		prime->wall.x_tile = (int)prime->player.px % IMG_SIZE;
+		prime->wall.x_tile = (long)prime->player.px % IMG_SIZE;
 		return true;
 	}
 	return false;
@@ -256,7 +193,8 @@ long ft_l_on_r1(t_prime *prime)
 	if(prime->ray.hit == 1)// hits a a col == 
 		l = prime->player.py + (prime->ray.len * sin(alpha));
 	else
-		l = prime->player.px  + (prime->ray.r_angle * cos(alpha));
+		l = prime->player.px  + (prime->ray.len * cos(alpha));
+
 	return l;
 }
 
@@ -266,7 +204,7 @@ long ft_l_on_r2(t_prime *prime)
 	long l;
 	
 	alpha = prime->ray.r_angle - (M_PI / 2);
-	if(prime->ray.hit == 2) // hits a the line south
+	if(prime->ray.hit == 2) // hits a the line = south wall
 		l = prime->player.px - (prime->ray.len * sin(alpha));
 	else
 		l = prime->player.py + (prime->ray.len * cos(alpha));
@@ -294,8 +232,9 @@ long ft_l_on_r4(t_prime *prime)
 	alpha = prime->ray.r_angle - (3 * M_PI / 2);
 	if (prime->ray.hit == 4)// his the line == north
 		l = prime->player.px + (prime->ray.len * sin(alpha));
-	else
+	else 
 		l = prime->player.py - (prime->ray.len * cos (alpha));
+
 	return l;
 	
 }
@@ -307,16 +246,17 @@ void ft_find_x_tile(t_prime *prime)
 		return;
 	if(prime->ray.r_angle > 0 && prime->ray.r_angle < (M_PI / 2))
 		l = ft_l_on_r1(prime);
-	else if (prime->ray.r_angle > (M_PI / 2) && prime->ray.r_angle < M_PI)
+	if (prime->ray.r_angle > (M_PI / 2) && prime->ray.r_angle < M_PI)
 		l = ft_l_on_r2(prime);
-	else if(prime->ray.r_angle > M_PI && prime->ray.r_angle < (3 * M_PI / 2))
+	if(prime->ray.r_angle > M_PI && prime->ray.r_angle < (3 * M_PI / 2))
 		l = ft_l_on_r3(prime);
-	else
-		l = ft_l_on_r3(prime);
+	if(prime->ray.r_angle > (3 * M_PI / 2) && prime->ray.r_angle < (2 * M_PI))
+		l = ft_l_on_r4(prime);
 	prime->wall.x_tile = l % IMG_SIZE;
 	
 
 }
+
 // -------------------------------------
 
 t_img ft_which_texture(t_prime *prime)
@@ -342,9 +282,12 @@ unsigned int ft_which_color(t_prime *prime, t_img img, int count)
 	long pos;
 	unsigned int color;
 	
+	if(prime->wall.x_tile < 0)
+		prime->wall.x_tile = 0;
+		
 	x_img = ((img.wid - 1) * prime->wall.x_tile) / (IMG_SIZE - 1);
 	y_img = ((img.hei - 1) * count) / (prime->wall.h - 1);
-	
+
 	pos = ((y_img * img.size_line) + (x_img * img.bits_per_pixel / 8));
 	
 	color = (*(unsigned int *)(img.ad + pos));
@@ -371,7 +314,7 @@ void ft_show_the_colom(t_prime *prime, double x_screen)// on prosses
 			return ;
 		color = ft_which_color(prime, img, count);
 
-		// printf("%d-%d     %d   %d\n", img.wid, img.hei, x_screen, y_screen);
+
 		ft_put_a_pixel(prime, x_screen, y_screen, color);
 		y_screen++;
 		count ++;
@@ -387,7 +330,6 @@ void ft_length_on_screen(t_prime *prime)
 		prime->wall.h = (IMG_SIZE * prime->wall.d) / prime->wall.real;
 }
 
-
 void ft_show_3d_walls(t_prime *prime)
 {
 	double teta;
@@ -401,25 +343,194 @@ void ft_show_3d_walls(t_prime *prime)
 	x_screen = 0;
 	while(x_screen < SCREEN_WID)
 	{
+		prime->ray.r_angle = ft_normalizing(prime->ray.r_angle);
 		ft_ray_cast(prime);
 		ft_length_on_screen(prime);// to find prime->wall.h the number pixls for this color on the screen and remove fich eye
 		ft_find_x_tile(prime);// to find out prime->wall.x_tile     the with pixels is actually hited on eather line/colom on my tail side 32
-		
-
-		
 		ft_show_the_colom(prime,x_screen);
-
-
-
-		// ft_show_the_colom_v1(prime, x_screen, 0x8B0000);// used for coloring walls only
-
-		
 		prime->ray.r_angle += teta;
-		prime->ray.r_angle = ft_normalizing(prime->ray.r_angle);
 		x_screen++;
 	}
 	
 }
+
+// mini map ---------------------------------
+
+void ft_mini_map_background(t_prime *prime)
+{
+	int x;
+	int y;
+	
+	x = -1;
+	y = -1;
+	
+	while(++y < MINI_HEI)
+	{
+		x = -1;
+		while(++x < MINI_WID)
+		{
+			ft_put_a_pixel(prime, x, y, 0xd3d3d3);
+		}
+	}
+}
+//------
+void ft_draw_mini_tile(t_prime *prime, int i_mini, int j_mini)
+{
+	int x;// multile the tile size to get the pexel 
+	int y;
+	int save;
+	int i = -1;
+	int j = -1;
+	
+	x = i_mini * MINI_TILE;
+	save = x;
+	y = j_mini * MINI_TILE;
+	
+	while(++j < MINI_TILE)
+	{
+		i = -1;
+		x = save;
+		while(++i < MINI_TILE)
+		{
+			ft_put_a_pixel(prime, x, y, 0x343534);
+			x++;
+		}
+		y++;
+	}
+}
+
+void ft_first_tile_cord(t_prime *prime,int *i_map, int *j_map)
+{
+	// player cord on the real map
+
+	*j_map = prime->player.py / IMG_SIZE;
+	*i_map = prime->player.px / IMG_SIZE;
+	
+	// we need thr first tile in pour mii map ??
+	
+	*i_map -= (MINI_COLS / 2);// to meve to the first tile in our small map
+	*j_map -= (MINI_LINES / 2);// to meve to the first tile in our small map
+}
+
+bool ft_valid_drawing (t_prime *prime, int i_map, int j_map)
+{
+	if(i_map < 0 || j_map < 0 )
+		return true;
+	if(i_map >= (int)prime->cols  || j_map >= (int)prime->lines)
+		return true;
+	if(prime->parse->map[j_map][i_map] == '1')
+		return true;
+	if(prime->parse->map[j_map][i_map] == ' ')
+		return true;
+	if(prime->parse->map[j_map][i_map] == '\0')
+		return true;
+	return false;
+	
+}
+						
+void ft_mini_map_walls(t_prime *prime)
+{
+	int j_mini;
+	int i_mini;
+	int j_map;
+	int i_map;
+	int save;
+	
+	ft_first_tile_cord(prime, &i_map, &j_map);
+	save = i_map;
+	i_mini = -1;
+	j_mini = -1;
+	while(++j_mini < MINI_LINES)
+	{
+		i_mini = -1;
+		while(++i_mini < MINI_COLS)
+		{
+			if(ft_valid_drawing(prime, i_map, j_map) == true)
+				ft_draw_mini_tile(prime, i_mini, j_mini);
+			i_map ++;	
+		}
+		i_map = save;
+		j_map ++;
+	}
+}
+//----
+
+
+void ft_mini_player_dir(t_prime *prime, int px, int py)
+{
+	double dx;
+	double dy;
+	int i;
+	
+	dx = cos(prime->player.angle);
+	dy = sin(prime->player.angle);
+	
+	i = 0;
+	while (i < 15)
+	{
+		int x = px + i * dx;
+		int y = py + i * dy;
+		ft_put_a_pixel(prime, x, y, 0x012840);
+		i++;
+	}
+}
+
+void ft_draw_mini_player(t_prime *prime, int dx_mini, int dy_mini)
+{
+	int px;
+	int py;
+	
+	px = (((MINI_WID / MINI_TILE) / 2) * MINI_TILE) + dx_mini;
+	py = (((MINI_HEI / MINI_TILE) / 2) * MINI_TILE)+ dy_mini;
+	
+	ft_put_a_pixel(prime, px, py, 0x011826);
+	ft_put_a_pixel(prime, px + 1, py, 0x011826);
+	ft_put_a_pixel(prime, px - 1, py, 0x011826);
+	ft_put_a_pixel(prime, px, py + 1, 0x011826);
+	ft_put_a_pixel(prime, px, py - 1, 0x011826);
+	
+	ft_put_a_pixel(prime, px + 2, py, 0x011826);
+	ft_put_a_pixel(prime, px - 2, py, 0x011826);
+	ft_put_a_pixel(prime, px, py + 2, 0x011826);
+	ft_put_a_pixel(prime, px, py - 2, 0x011826);
+	
+	ft_put_a_pixel(prime, px + 1, py + 1, 0x011826);
+	ft_put_a_pixel(prime, px - 1, py - 1, 0x011826);
+	ft_put_a_pixel(prime, px - 1, py + 1, 0x011826);
+	ft_put_a_pixel(prime, px + 1, py - 1, 0x011826);
+	ft_mini_player_dir(prime, px, py);
+	
+}
+
+void ft_mini_player(t_prime *prime)
+{
+	int dy_mini;
+	int dx_mini;
+	int y_tile;
+	int x_tile;
+
+	 y_tile = (long)prime->player.py % IMG_SIZE;
+	 x_tile = (long)prime->player.px % IMG_SIZE;
+	
+	dx_mini = (MINI_TILE - 1) * (x_tile) / (IMG_SIZE - 1);
+	dy_mini = (MINI_TILE - 1) * (y_tile) / (IMG_SIZE - 1);
+	ft_draw_mini_player(prime, dx_mini, dy_mini);
+	
+
+	
+	
+}
+
+void ft_the_mini_map(t_prime *prime)
+{
+	ft_mini_map_background(prime);
+	ft_mini_map_walls(prime);
+	ft_mini_player(prime);
+	
+
+}
+
+
 
 int ft_raycast_and_render(t_prime *prime)
 {
@@ -427,19 +538,15 @@ int ft_raycast_and_render(t_prime *prime)
 	ft_update_range(prime);
 	ft_update_postion(prime);
 	ft_update_angle(prime);
-	
-	//####################################
+
 	mlx_destroy_image(prime->mlx_ptr, prime->img_ptr);
 	prime->img_ptr = mlx_new_image(prime->mlx_ptr, SCREEN_WID, SCREEN_HEI);
 	prime->ad_ptr = mlx_get_data_addr(prime->img_ptr, &prime->bits, &prime->linesize , &parameter);
 	
 	ft_sky_and_ground(prime);
-	
 	ft_show_3d_walls(prime);
 
-	
-	
-
+	ft_the_mini_map(prime);
 	// ft_color_walls((prime));
 	// ft_put_player(prime, prime->win_ptr);
 	// ft_show_field_of_view(prime);
@@ -466,6 +573,7 @@ bool ft_rendering(t_prime *prime)
 	mlx_hook(prime->win_ptr, KEY_RELEASE, 0L, ft_release_events, prime);
 	mlx_hook(prime->win_ptr, DESTROYNOTIFY, 0L, ft_close_botton, prime);
 	mlx_loop_hook(prime->mlx_ptr, ft_raycast_and_render, prime);
+	
 	mlx_loop(prime->mlx_ptr);
 	return true;
 }

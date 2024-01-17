@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 12:17:16 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/01/14 11:27:18 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/01/16 15:07:08 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@
 #include <string.h>
 
 
+
+
+
+
 typedef struct	s_parse
 {
 	char	**map;
@@ -26,11 +30,12 @@ typedef struct	s_parse
 	char	*we;
 	char	*ea;
 
-	// int f;
-	// int c;
+	int f;
+	int c;
 
 } t_parse;
 
 t_parse  *ft_virtual_parcing(int ac, char **av);
+
 
 # endif

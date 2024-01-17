@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 12:18:11 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/01/15 15:01:55 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/01/17 14:09:35 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 #define HEADER_H
 
 # include "parcing/parcing.h"
+# include <mlx.h>
 # include <stdio.h>
 # include <stdbool.h>
 # include <math.h>
-# include <mlx.h>
 # include <unistd.h>// remove later
 #include <string.h>// for strdup
 
@@ -49,6 +49,12 @@
 #define HIT_SOUTH 2
 #define HIT_WEST 3
 #define HIT_NORTH 4
+
+#define MINI_TILE 20
+#define MINI_WID 260
+#define MINI_HEI 180
+#define MINI_COLS 13
+#define MINI_LINES 9
 
 typedef struct s_player
 {
@@ -132,6 +138,7 @@ typedef struct s_prime
 	t_ray ray;
 	t_wall wall;
 	t_img imgs[4];// 0 for east 1 for south 2 for west and 3 for north
+
 } t_prime;
 
 

@@ -6,13 +6,13 @@
 #    By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/23 14:47:42 by hed-dyb           #+#    #+#              #
-#    Updated: 2024/01/07 12:32:12 by hed-dyb          ###   ########.fr        #
+#    Updated: 2024/01/16 18:44:10 by hed-dyb          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3D
 
-HEADER = header.h
+HEADER = header.h parcing/parcing.h
 
 CC = cc 
 
