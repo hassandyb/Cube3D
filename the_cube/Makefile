@@ -6,7 +6,7 @@
 #    By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/23 14:47:42 by hed-dyb           #+#    #+#              #
-#    Updated: 2024/01/16 18:44:10 by hed-dyb          ###   ########.fr        #
+#    Updated: 2024/01/17 20:31:08 by hed-dyb          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,9 +25,10 @@ LINKING_FLAGS = -lmlx -framework OpenGL -framework AppKit
 # SRC_PARCING = $(addprefix parcing/, example.....)
 SRC_INITIALIZATION = $(addprefix initialization/, initialize.c)
 SRC_RAY_CASTING = $(addprefix ray_casting/, raycast.c hit.c castingr1.c castingr2.c castingr3.c castingr4.c cast_utils.c )
-SRC_RENDERING = $(addprefix rendering/, render.c position.c events.c collision.c updates.c)
+SRC_RENDERING = $(addprefix rendering/, render.c position.c events.c collision.c updates.c 3Dwalls.c xtile.c mlx.c)
+SRC_MINIMAP = $(addprefix minimap/, mini.c walls.c)
 
-SRC = main.c test.c $(SRC_INITIALIZATION) $(SRC_RENDERING) $(SRC_RAY_CASTING)  $(SRC_PARCING)  
+SRC = main.c test.c $(SRC_INITIALIZATION) $(SRC_RENDERING) $(SRC_RAY_CASTING)  $(SRC_PARCING)  $(SRC_MINIMAP)
 
 OBJECTS = ./obj
 

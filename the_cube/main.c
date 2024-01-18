@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 12:06:02 by hed-dyb           #+#    #+#             */
-/*   Updated: 2023/12/31 13:39:41 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/01/18 18:09:55 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int main (int ac, char **av)
 
 
 
-	if(ft_rendering(&prime) == false)
+	if (ft_rendering(&prime) == false)
 	{
 		// free all 
 		return (1);
