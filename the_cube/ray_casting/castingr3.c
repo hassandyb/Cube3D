@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 11:56:34 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/01/17 21:31:53 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/01/18 18:21:23 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	ft_find_l_len_r3(t_prime *prime)
 
 	alpha = prime->ray.r_angle - M_PI;
 	pt_x = prime->player.px - prime->ray.deltax;
-	pt_y = prime->player.py - prime->ray.deltay -5 ;
+	pt_y = prime->player.py - prime->ray.deltay - 5;
 	if (ft_valid_i(prime, pt_x) == false)
 		return ;
 	if (ft_is_intersection_point(prime, pt_x, pt_y) == true)

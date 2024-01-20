@@ -6,14 +6,14 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 12:18:11 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/01/18 18:09:42 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/01/20 15:20:35 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef HEADER_H
 # define HEADER_H
 
-# include "parcing/parcing.h"
+# include "parcing/cub3d.h"
 # include <mlx.h>
 # include <stdio.h>
 # include <stdbool.h>
@@ -50,6 +50,11 @@
 # define MINI_HEI 180
 # define MINI_COLS 13
 # define MINI_LINES 9
+# define RANGE_ONE 1
+# define RANGE_TWO 2
+# define RANGE_THREE 3
+# define RANGE_FOUR 4
+
 
 typedef struct s_player
 {
@@ -112,7 +117,7 @@ typedef struct s_prime
 }	t_prime;
 
 void			ft_initialize(t_prime *prime, t_parse *parse);
-bool			ft_rendering(t_prime *prime);
+void			ft_rendering(t_prime *prime);
 int				ft_press_events(int key, t_prime *prime);
 void			ft_update_range(t_prime *prime);
 int				ft_release_events(int key, t_prime *prime);
@@ -193,4 +198,5 @@ void			ft_put_a_pixel(t_prime *prime, int x, int y, int color);
 bool			ft_load_img(t_prime *prime, char *path, int car);
 bool			ft_load_textures(t_prime *prime);
 bool			ft_init_mlx_data(t_prime *prime);
+void			ft_free_mem(char **tab);
 #endif

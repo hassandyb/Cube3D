@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 11:23:06 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/01/18 16:07:27 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/01/20 15:25:33 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	ft_raycast_and_render(t_prime *prime)
 	return (0);
 }
 
-bool	ft_rendering(t_prime *prime)
+void	ft_rendering(t_prime *prime)
 {
 	if (ft_init_mlx_data(prime) == false)
 	{
@@ -87,5 +87,4 @@ bool	ft_rendering(t_prime *prime)
 	mlx_hook(prime->win_ptr, DESTROYNOTIFY, 0L, ft_close_botton, prime);
 	mlx_loop_hook(prime->mlx_ptr, ft_raycast_and_render, prime);
 	mlx_loop(prime->mlx_ptr);
-	return (true);
 }

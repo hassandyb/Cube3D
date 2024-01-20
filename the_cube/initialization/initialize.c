@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 11:55:55 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/01/18 14:15:58 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/01/20 15:23:27 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,61 +29,26 @@ void	ft_initialize_rows_cols(t_prime *prime)
 
 void	ft_initialize_player_angle(t_prime *prime)
 {
-	int		i;
-	int		j;
-	char	**tmp;
+	if (prime->parse->p == 'N')
+		prime->player.angle = 3 * (M_PI / 2);
+	if (prime->parse->p == 'S')
+		prime->player.angle = M_PI / 2;
+	if (prime->parse->p == 'E')
+		prime->player.angle = 0;
+	if (prime->parse->p == 'W')
+		prime->player.angle = M_PI;
 
-	i = -1;
-	j = -1;
-	tmp = prime->parse->map;
-	while (tmp[++j])
-	{
-		i = -1;
-		while (tmp[j][++i])
-		{
-			if (tmp[j][i] == 'N')
-				prime->player.angle = 3 * (M_PI / 2);
-			if (tmp[j][i] == 'S')
-				prime->player.angle = M_PI / 2;
-			if (tmp[j][i] == 'E')
-				prime->player.angle = 0;
-			if (tmp[j][i] == 'W')
-				prime->player.angle = M_PI;
-		}
-	}
 }
 
-void	ft_find_player_cord(t_prime *prime, int *i_ptr, int *j_ptr)
-{
-	int		i;
-	int		j;
-	char	**tmp;
 
-	j = -1;
-	i = -1;
-	tmp = prime->parse->map;
-	while (tmp[++j])
-	{
-		i = -1;
-		while (tmp[j][++i])
-		{
-			if (tmp[j][i] == 'N' || tmp[j][i] == 'S'\
-				|| tmp[j][i] == 'E' || tmp[j][i] == 'W')
-			{
-				*i_ptr = i;
-				*j_ptr = j;
-				return ;
-			}
-		}
-	}
-}
 
 void	ft_initialize_player_cord(t_prime *prime)
 {
 	int		i;
 	int		j;
 
-	ft_find_player_cord(prime, &i, &j);
+	i = prime->parse->py;
+	j = prime->parse->px;
 	prime->player.px = (i * IMG_SIZE) + (IMG_SIZE / 2);
 	prime->player.py = (j * IMG_SIZE) + (IMG_SIZE / 2);
 	prime->parse->map[j][i] = '0';

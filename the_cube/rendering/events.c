@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 13:42:38 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/01/18 16:07:23 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/01/20 18:06:40 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,21 @@
 
 void	ft_clean_exit(t_prime *prime)
 {
-	int j;
-
-	j = -1;
-	while(prime->parse->map[++j] != NULL)
-	{
-		free(prime->parse->map[j]);
-	}
-	free(prime->parse->map);
-	free(prime->parse);
-	// free any other dataallocated
-		// if(ptr .. != NULL)
-		// mlx_destroy_image  w
-		//  mlx_destroy_image  n
-		//  mlx_destroy_image  s
-		//   mlx_destroy_image  east 
-
+	if(prime->parse->map)
+		ft_free_mem(prime->parse->map);
+	if(prime->parse->no)
+		free(prime->parse->no);
+	if(prime->parse->so)
+		free(prime->parse->so);
+	if(prime->parse->we)
+		free(prime->parse->we);
+	if(prime->parse->ea)
+		free(prime->parse->ea);
 	if(prime->mlx_ptr != NULL && prime->img_ptr != NULL)
 		mlx_destroy_image(prime->mlx_ptr, prime->img_ptr);
-
-	// if(wi_ptr != NULL)
-		// mlx_clear_window 
-	//if(mlx_ptr != NULL)
-		// mlx_destroy_window
-	printf("Successful exit.\n");
+	if(prime->mlx_ptr != NULL && prime->win_ptr)
+		mlx_destroy_window(prime->mlx_ptr, prime->win_ptr);
+	printf("Game over.\n");
 	exit(1);
 }
 

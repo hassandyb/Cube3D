@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 12:29:07 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/01/18 16:14:11 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/01/20 15:21:44 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,14 @@ double	ft_normalizing(double angle)
 void	ft_update_range(t_prime *prime)
 {
 	if (prime->player.angle >= 0 && prime->player.angle < (M_PI / 2))
-		prime->angle_range = 1;
+		prime->angle_range = RANGE_ONE;
 	if (prime->player.angle >= (M_PI / 2) && prime->player.angle < M_PI)
-		prime->angle_range = 2;
+		prime->angle_range = RANGE_TWO;
 	if (prime->player.angle >= M_PI && prime->player.angle < (3 * M_PI / 2))
-		prime->angle_range = 3;
+		prime->angle_range = RANGE_THREE;
 	if (prime->player.angle >= (3 * M_PI / 2) \
 		&& prime->player.angle < (2 * M_PI))
-		prime->angle_range = 4;
+		prime->angle_range = RANGE_FOUR;
 }
 
 void	ft_update_angle(t_prime *prime)
