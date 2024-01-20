@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:42:51 by cgouiame          #+#    #+#             */
-/*   Updated: 2024/01/20 16:23:52 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/01/20 19:55:37 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 typedef struct s_parse
 {
 	char	**map;
+	int		lenstr;
 	int		flag;
 	int		mapsize;
 	char	*no;
