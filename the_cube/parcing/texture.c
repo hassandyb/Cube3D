@@ -6,7 +6,7 @@
 /*   By: cgouiame <cgouiame@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 21:29:02 by cgouiame          #+#    #+#             */
-/*   Updated: 2024/01/19 18:29:52 by cgouiame         ###   ########.fr       */
+/*   Updated: 2024/01/22 16:52:09 by cgouiame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,17 +73,17 @@ int	parsetexture(char *str, t_parse *parse)
 	while (tab[j])
 		j++;
 	if (j != 2)
-		return (0);
-	if (!ft_strcmp(tab[0], "NO"))
+		return (ft_free_mem(tab), 0);
+	if (!ft_strcmp(tab[0], "NO") && parse->no == NULL)
 		parse->no = ft_strdup(tab[1]);
-	else if (!ft_strcmp(tab[0], "SO"))
+	else if (!ft_strcmp(tab[0], "SO") && parse->so == NULL)
 		parse->so = ft_strdup(tab[1]);
-	else if (!ft_strcmp(tab[0], "WE"))
+	else if (!ft_strcmp(tab[0], "WE") && parse->we == NULL)
 		parse->we = ft_strdup(tab[1]);
-	else if (!ft_strcmp(tab[0], "EA"))
+	else if (!ft_strcmp(tab[0], "EA") && parse->ea == NULL)
 		parse->ea = ft_strdup(tab[1]);
 	else
-		return (0);
+		return (ft_free_mem(tab), 0);
 	ft_free_mem(tab);
 	return (1);
 }

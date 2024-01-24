@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cgouiame <cgouiame@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 21:30:35 by cgouiame          #+#    #+#             */
-/*   Updated: 2024/01/20 18:51:59 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/01/22 16:53:29 by cgouiame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
- 
 
 char	*ft_erase(char *str)
 {
@@ -40,7 +39,11 @@ void	ft_free_mem(char **tab)
 
 	i = 0;
 	while (tab[i])
-		free(tab[i++]);
+	{
+		if (tab[i] != NULL)
+			free(tab[i]);
+		i++;
+	}
 	free(tab);
 }
 

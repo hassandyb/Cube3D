@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 13:42:38 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/01/20 18:06:40 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/01/22 18:31:35 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 
 void	ft_clean_exit(t_prime *prime)
 {
-	if(prime->parse->map)
+	if (prime->parse->map)
 		ft_free_mem(prime->parse->map);
-	if(prime->parse->no)
+	if (prime->parse->no)
 		free(prime->parse->no);
-	if(prime->parse->so)
+	if (prime->parse->so)
 		free(prime->parse->so);
-	if(prime->parse->we)
+	if (prime->parse->we)
 		free(prime->parse->we);
-	if(prime->parse->ea)
+	if (prime->parse->ea)
 		free(prime->parse->ea);
-	if(prime->mlx_ptr != NULL && prime->img_ptr != NULL)
+	if (prime->mlx_ptr != NULL && prime->img_ptr != NULL)
 		mlx_destroy_image(prime->mlx_ptr, prime->img_ptr);
-	if(prime->mlx_ptr != NULL && prime->win_ptr)
+	if (prime->mlx_ptr != NULL && prime->win_ptr)
 		mlx_destroy_window(prime->mlx_ptr, prime->win_ptr);
 	printf("Game over.\n");
 	exit(1);

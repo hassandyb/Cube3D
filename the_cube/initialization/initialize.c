@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 11:55:55 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/01/20 15:23:27 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/01/22 20:07:37 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,7 @@ void	ft_initialize_player_angle(t_prime *prime)
 		prime->player.angle = 0;
 	if (prime->parse->p == 'W')
 		prime->player.angle = M_PI;
-
 }
-
-
 
 void	ft_initialize_player_cord(t_prime *prime)
 {

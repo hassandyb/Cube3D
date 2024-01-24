@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cgouiame <cgouiame@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:42:51 by cgouiame          #+#    #+#             */
-/*   Updated: 2024/01/20 19:55:37 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/01/22 17:03:03 by cgouiame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ typedef struct s_parse
 
 }	t_parse;
 
-
-
 typedef struct s_var
 {
 	int	i;
@@ -50,6 +48,7 @@ typedef struct s_var
 }	t_var;
 
 void	ft_parse(int ac, char **av, t_parse *parse);
+void	parsemap(t_parse *parse);
 char	*get_next_line(int fd);
 char	*ft_strdup(char *s1);
 int		ft_strlen(char *str);
@@ -65,6 +64,7 @@ int		my_atoi(char *str);
 int		ft_strcmp(char *s1, char *s2);
 void	ft_parse_cub(int fd, t_parse *parse, char *av);
 char	*ft_erase(char *str);
+int		get_longest_line(char **map, int *i);
 int		parsemycolor(char *str, t_parse *parse, int flag);
 char	**read_map(int fd, char *av, t_parse *parse);
 int		parsetexture(char *str, t_parse *parse);

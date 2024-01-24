@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 12:18:11 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/01/20 15:20:35 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/01/22 18:31:17 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@
 # define RANGE_TWO 2
 # define RANGE_THREE 3
 # define RANGE_FOUR 4
-
 
 typedef struct s_player
 {
