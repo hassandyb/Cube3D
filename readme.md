@@ -1,5 +1,5 @@
 
-```markdown
+
 # cub3D: Experience the Magic of 3D Mazes
 
 Welcome to **cub3D**! Imagine stepping into a 3D maze where you control the view and explore as if you were really there. Inspired by the groundbreaking game Wolfenstein 3D, **cub3D** is a fun project that lets you experience the thrill of navigating through a maze in a first-person perspective.
@@ -35,7 +35,7 @@ Here’s a little example to give you an idea:
 - **Colors**: Choose colors for the floor (like a nice brown) and the ceiling (maybe a light blue).
 - **Maze Layout**: The maze file might look something like this:
 
-```text
+
 NO ./textures/brick_wall.xpm
 SO ./textures/stone_wall.xpm
 WE ./textures/wood_wall.xpm
@@ -47,7 +47,7 @@ C 100,150,200
 101001
 1100N1
 111111
-```
+
 
 In this example:
 - `NO` refers to the texture for the North side of the wall.
@@ -65,6 +65,6 @@ The goal of **cub3D** is to create a fun and visually engaging experience where 
 3. **Have Fun**: Enjoy exploring your 3D maze and experimenting with different settings!
 
 Enjoy your journey through the maze!
-```
+
 
 This `README.md` provides a clear and engaging overview of the cub3D project, designed to be accessible and interesting for non-technical users.
